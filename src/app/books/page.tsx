@@ -1,7 +1,10 @@
 'use client';
 
-import { useState, useEffect, useCallback } from 'react';
+import { Suspense, useState, useEffect, useCallback } from 'react';
+import { useParams, useRouter } from 'next/navigation';
 import Link from 'next/link';
+
+export const dynamic = 'force-dynamic';
 
 interface Author {
   id: string;
@@ -411,7 +414,7 @@ export default function BooksPage() {
               >
                 <option value="">Todos los géneros</option>
                 {availableGenres.map((g) => (
-                  <option key={g} value={g}>
+                  <option key={g} value={String(g)}>
                     {g}
                   </option>
                 ))}
@@ -852,4 +855,11 @@ export default function BooksPage() {
       )}
     </div>
   );
+  export default function AuthorDetailPage() {
+  return (
+    <Suspense fallback={<div className="p-8 text-center text-slate-500">Cargando autor...</div>}>
+      <AuthorDetailContent />
+    </Suspense>
+  );
+}
 }
