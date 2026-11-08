@@ -275,9 +275,14 @@ export default function BooksPage() {
     }
   };
 
-  // Géneros combinados disponibles
-  const availableGenres = Array.from(
-    new Set([...COMMON_GENRES, ...books.map((b) => b.genre).filter(Boolean)])
+// Géneros combinados disponibles con tipado estricto string[]
+  const availableGenres: string[] = Array.from(
+    new Set([
+      ...COMMON_GENRES,
+      ...books
+        .map((b) => b.genre?.trim())
+        .filter((g): g is string => typeof g === 'string' && g.length > 0),
+    ])
   );
 
   return (
